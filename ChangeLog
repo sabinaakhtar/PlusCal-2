@@ -1,0 +1,34 @@
+TODO: is LinkedHashMap a good default?
+TODO: still more raw types to convert, but I need to reindent+rename
+      some symbols before going on
+
+[2009-09-10 Martin Quinson]
+ * Drop my Peterson2 example, Sabina's one is better
+ 
+[2009-09-10 Sabina Akhtar]
+ * Update the examples
+
+[2009-09-10 Martin Quinson]
+ * Started a ChangeLog with the changes (this file)
+ * Stop editing generated files.
+   Put name field and getter stuff that were added to several Node 
+    sub-classes into SimpleNode.
+   Changed the SimpleNode:toString() method to use that value if not
+    null instead of default one.
+   It is now safe to use "make really-clean", to remove generated files
+ * Reduce the amount of warnings spit by javac to javacc code
+    I simply added the "STATIC = false" option to pcal.jjt 
+     Without it, javacc produce code that javac complains at:
+     "Static method should be accessed in a static way"
+ * Create a new example Peterson2.pcal being the one in the article 
+   - Commented the temporal because I cannot get it working
+   - the definition "CHOOSE id \in Node : id # self" raise a warning
+     about id not being declared. I guess this should be fixed.
+ * Kill SymbolTablePackage/ (old copy of SymbolTable.java?)
+ * Various cosmetics to the code
+   - initialize fields when declaring them, not away in constructor
+     (keeps def and init together)
+   - remove now empty constructors
+   - use equals() instead of compareTo() == 0
+   - use advanced for statements instead of mucking with iterators
+   - kill various unused local variable (result of copy/paste?)
