@@ -1,0 +1,56 @@
+algorithm FastMutex
+extends Naturals,TLC,Sequences,FiniteSets
+constant IDSet, N
+variables x = 0 , y = 0 , b = [i \in  IDSet |-> FALSE]
+
+process Proc[N]
+    variable j = 0
+    begin
+        ncs:loop
+                skip ;
+        start:  b[self] := TRUE ;
+        l1:     x := self ;
+        l2:     branch
+                    y # 0 then 
+        l3:         	b[self] := FALSE ;
+        l4:         	branch
+                       	 	y = 0 then goto start
+                    	end
+                else 
+					skip
+                end;
+        l5:     y := self ;
+        l6:     branch
+                    x # self then
+        l7:         	b[self] := FALSE ;
+                    	j := 1;
+
+        l8:         	loop
+                       		branch
+                           		j <= N then
+                           	 		branch
+                               	 		~b[j] then
+                               		 		j := j+1;
+                           			end branch;
+                       		else
+                            	goto l9;
+                       		end branch;
+                    	end loop;
+        l9:         branch
+                        y # self then
+        l10:            	branch
+                            	y = 0 then goto start;
+                        	end branch;
+                   else 
+				   		skip;
+                   end branch;
+                else 
+					skip;
+                end branch;
+        cs:     skip ;
+        l11:    y := 0 ;
+        l12:    b[self] := FALSE
+            end loop;
+    end process
+end algorithm
+constants IDSet = {1,2}, N = 2
